@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  pokemons-home:
+    build:
+      context: ./pokemons-home
+      dockerfile: Dockerfile
+    ports:
+      - "4173:4173" 
+    volumes:
+      - ./pokemons-home:/usr/src/app
+      - /usr/src/app/node_modules
+    stdin_open: true
+    tty: true
+
+  pokemons-list:
+    build:
+      context: ./pokemons-list
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173" 
+    volumes:
+      - ./pokemons-list:/usr/src/app
+      - /usr/src/app/node_modules
+    stdin_open: true
+    tty: true
