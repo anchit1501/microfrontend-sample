@@ -41,12 +41,6 @@ If you are using a Vite project:
 yarn build && yarn preview
 ```
 
-If you are using a CRA (Create React App) project:
-
-```bash
-yarn build && yarn dev
-```
-
 After running this command, the microfrontend (`pokemons-list`) will be available and generate the `remoteEntry.js` file.
 
 #### Install Dependencies for `pokemons-home`
@@ -62,7 +56,7 @@ yarn
 Run the following command in the `pokemons-home` directory:
 
 ```bash
-yarn dev
+yarn build && yarn preview
 ```
 
 This will start the host application and integrate with the `pokemons-list` microfrontend. You can now interact with the host app and its microfrontend.
