@@ -10,7 +10,6 @@ import {
 } from "./src/customization/config-constants";
 import federation from "@originjs/vite-plugin-federation";
 
-
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
@@ -34,32 +33,49 @@ export default defineConfig(({ mode }) => {
   return {
     base: BASENAME || "",
     build: {
-      outDir: "build",
+      outDir: "dist",
       target: "esnext",
       minify: false,
       cssCodeSplit: false,
+      assetsDir: 'assets', // Directory for assets
+    rollupOptions: {
+      output: {
+        // Ensure paths are resolved correctly
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
+      },
+    },
+      
     },
     define: {
       "process.env.BACKEND_URL": JSON.stringify(env.BACKEND_URL),
       "process.env.ACCESS_TOKEN_EXPIRE_SECONDS": JSON.stringify(
-        env.ACCESS_TOKEN_EXPIRE_SECONDS,
+        env.ACCESS_TOKEN_EXPIRE_SECONDS
       ),
       "process.env.CI": JSON.stringify(env.CI),
     },
-    plugins: [react(), svgr(), tsconfigPaths(),
+    plugins: [
+      react(),
+      svgr(),
+      tsconfigPaths(),
       federation({
         name: "langflow",
         filename: "remoteEntry.js",
         exposes: {
           "./langflow": "./src/App",
+          "./langflowRoutes": "./src/routes",
         },
-        shared: ["react", "react-dom"],
+        shared: ["react", "react-dom","react-router-dom"],
       }),
     ],
     server: {
       port: port,
       proxy: {
         ...proxyTargets,
+      },
+      fs: {
+        strict: false,
       },
     },
   };

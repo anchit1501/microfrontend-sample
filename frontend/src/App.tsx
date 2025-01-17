@@ -1,13 +1,7 @@
-import "@xyflow/react/dist/style.css";
-import { Suspense } from "react";
+import React from "react";
 import { RouterProvider } from "react-router-dom";
-import { LoadingPage } from "./pages/LoadingPage";
-import router from "./routes";
+import langflowRouter from "./routes";
 
-export default function App() {
-  return (
-    <Suspense fallback={<LoadingPage />}>
-      <RouterProvider router={router} />
-    </Suspense>
-  );
+export default function Langflow() {
+  return <RouterProvider router={langflowRouter} />;
 }
